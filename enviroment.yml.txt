@@ -1,0 +1,22 @@
+name: stromboli_dl
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.8
+  - pip
+  - pip:
+      - tensorflow==2.9.0
+      - keras==2.9.0
+      - numpy
+      - pandas
+      - matplotlib
+      - opencv-python
+      - Pillow
+      - scikit-image
+      - scipy
+      - keras-retinanet
+      - segmentation-models
+      - plotly
+      - ipykernel
+      - python-dotenv
