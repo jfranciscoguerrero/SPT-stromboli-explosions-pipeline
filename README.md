@@ -17,6 +17,8 @@ Repository structure
 
 .
 ├── cnn_models/ # Trained models (classifier, detector, segmenter)
+├── notebooks/ # Notebooks with the neural network scripts
+│ ├── retinanet/ RetinaNet scripts
 ├── data/ # Sample data and metadata
 │ ├── samples/ # Sample videos (subset of the dataset)
 │ ├── metadata/ # CSV files with frame indexing / metadata
@@ -27,15 +29,70 @@ Repository structure
 └── .env # environment local paths
 └── README.md
 
+Requirements
+
+Python 3.8+ (recommended for TensorFlow 2.9)
+Conda (optional)
+Docker (optional, recommended for reproducibility)
+
+
+Clone the repository
+
+git clone git@github.com:jfranciscoguerrero/SPT-stromboli-explosions-pipeline.git
+
+cd /SPT-stromboli-explosions-pipeline/
 
 ## Installation
 
-Using conda:
+1. Option A: Using Conda
 
-```bash
-conda env create -f environment.yml
-conda activate stromboli_dl
+Step 1: Create the environment
 
-Using pip:
+    Run in the repository root:
 
-pip install -r requirements.txt
+    conda env create -f environment.yml
+
+Step 2: Activate the environment
+
+    conda activate stromboli_dl
+
+Step 3: Run the pipeline
+
+    python src/run_pipeline.py
+
+2. Option B: Using Pip
+
+Step 1: Install dependencies
+
+    (Optional) Create a virtual environment
+
+    pip install -r requirements.txt
+
+    python src/run_pipeline.py
+
+3. Option C: using Docker
+
+Step 1: Build the Docker image
+
+    Linux/macOS:
+    docker run -it --rm -v "$(pwd)":/app stromboli-pipeline
+
+    Windows PowerShell:
+    docker run -it --rm -v ${PWD}:/app stromboli-pipeline
+
+Step 3: Run the pipeline inside the container
+    
+    python src/run_pipeline.py
+
+4. The full dataset is hosted on Zenodo due to its size.
+
+    Zenodo link (DOI): https://zenodo.org/franciscoguerrero/1452.doi.11111
+
+    You can use this dataset to:
+
+        Train the models provided in this repository,
+
+        Reproduce the experiments described in the paper,
+
+        Run your own experiments or personal projects based on thermal imagery.
+        If you use this dataset in your work (research or personal projects), please cite the Zenodo DOI.
