@@ -25,7 +25,7 @@ Repository structure
 │ └── mask/ # Auxiliary resources (e.g., black image mask)
 ├── results/ # Output results (CSV, plots, logs, etc.)
 ├── src/ # Source code (.py scripts)
-├── requirements.txt / environment.yml # environment setup
+├── requirements.txt / environment.yml /Dockerfile # environment setup
 └── .env # environment local paths
 └── README.md
 
