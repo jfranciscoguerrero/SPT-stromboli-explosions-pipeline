@@ -37,7 +37,7 @@ def main():
     print("LSTM analysis completed (^‿^)\n")
 
     print("[3/5] Running Retina_U-Net analyzer")
-    run_script("RetinaNet_Unet_analyzer.py")
+    run_script("U_RetinaNet_Unet_analyzer.py")
     print("Retina_U-Net analyzer completed (^‿^)\n")
 
     print("[4/5] Creating Report")
