@@ -2,7 +2,6 @@ from datetime import datetime
 import pandas as pd
 import os
 
-##Convert string 'YYYYMMDD' to date.
 def convert_day_str(day_str: str): 
     return pd.to_datetime(day_str, format="%Y%m%d").date()
 

@@ -4,7 +4,6 @@ import time
 from pathlib import Path
 from concurrent.futures import ProcessPoolExecutor, as_completed
 from dotenv import load_dotenv
-
 from frames_indexer.video_indexer import index_one_day
 
 
@@ -14,8 +13,7 @@ REPO_ROOT = CURRENT_DIR.parent
 load_dotenv(dotenv_path=REPO_ROOT / ".env")     
 sys.path.append(str(REPO_ROOT))
 
-
-# ------------------Read variables from .env -----------------
+#.env
 PROJECT_ROOT = Path(os.getenv("PROJECT_ROOT", "."))
 PROJECT_ROOT = (REPO_ROOT / PROJECT_ROOT).resolve() if not PROJECT_ROOT.is_absolute() else PROJECT_ROOT.resolve()
 

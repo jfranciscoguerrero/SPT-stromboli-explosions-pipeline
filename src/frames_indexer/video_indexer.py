@@ -29,18 +29,13 @@ def index_one_day(
     print(f"\n Day {day_str}")
     print("Day folder:", day_path)
 
-    # Ensure output folder exists
     csv_destination.mkdir(parents=True, exist_ok=True)
-
-    # Output CSV path
     csv_path = csv_destination / f"SPT_{day_str}.csv"
 
-    # Skip if CSV exists
     if csv_path.exists():
         print(f" CSV already exists for {day_str}, skipping.")
         return start_id
 
-    # List videos
     video_names = list_videos(day_path)
     if not video_names:
         print("No videos found in", day_path)
@@ -68,7 +63,7 @@ def index_one_day(
 
             print("  Processing video:", video_name)
 
-            # Initial datetime from filename
+
             fecha_inicial = convert_start_date_from_filename(video_name)
             t_ms = int(fecha_inicial.timestamp() * 1000)
 

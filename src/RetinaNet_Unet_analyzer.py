@@ -2,30 +2,20 @@ import os
 import sys
 from pathlib import Path
 from datetime import datetime
-
 import numpy as np
 import pandas as pd
 import cv2 as cv
-
 from dotenv import load_dotenv
-
-# ============== IMPORTS RETINANET =============
 from keras_retinanet import models
 from keras_retinanet.utils.image import preprocess_image, resize_image
 from keras_retinanet.utils.visualization import draw_box, draw_caption
 from keras_retinanet.utils.colors import label_color
-
-# ============== U-NET / segmentation_models =============
 import tensorflow as tf
 from segmentation_models.metrics import iou_score
 from PIL import Image
 
-
-# =========================
-# LOAD .env (robust)
-# =========================
-CURRENT_DIR = Path(__file__).resolve().parent   # .../src
-REPO_ROOT = CURRENT_DIR.parent                 # repo root
+CURRENT_DIR = Path(__file__).resolve().parent  
+REPO_ROOT = CURRENT_DIR.parent              
 load_dotenv(dotenv_path=REPO_ROOT / ".env")
 
 PROJECT_ROOT = Path(os.getenv("PROJECT_ROOT", "."))
@@ -57,7 +47,8 @@ if not SELECTED_DAYS:
 print("Selected samples loaded:", SELECTED_DAYS)
 
 
-# ================== PARAMETERS ==================
+# parameters
+
 THRESH = 0.20
 BATCH_SIZE_RETINA = 32
 BATCH_SIZE_UNET = 128
@@ -83,8 +74,6 @@ def mask_to_rgb(pred_mask, threshold=0.5):
     rgb_mask[valid_pixels & (max_indices == 4)] = GREEN
 
     return rgb_mask
-
-
 
 try:
     gpus = tf.config.list_physical_devices("GPU")

@@ -19,11 +19,7 @@ load_dotenv(dotenv_path=REPO_ROOT / ".env")
 
 PROJECT_ROOT = Path(os.getenv("PROJECT_ROOT", "."))
 PROJECT_ROOT = (REPO_ROOT / PROJECT_ROOT).resolve() if not PROJECT_ROOT.is_absolute() else PROJECT_ROOT.resolve()
-
-# Where Step 1 wrote CSVs + selected_samples.txt
 CSV_OUTPUT_DIR = (PROJECT_ROOT / os.getenv("CSV_OUTPUT_DIR", "metadati")).resolve()
-
-# Where Step 2 writes results
 RESULTS_DIR = (PROJECT_ROOT / os.getenv("RESULTS_DIR", "results")).resolve()
 
 MODEL_LSTM = os.getenv("MODEL_LSTM", "")
@@ -56,8 +52,10 @@ MAX_GAP_BETWEEN_ZEROS = 3
 MIN_CONSEC_ZEROS = 4
 
 BASE_W, BASE_H = 704, 520
-ROI_X, ROI_Y = 100, 100
-ROI_W, ROI_H = 504, 320
+
+### change ROI's coordinates if change the training settings.
+ROI_X, ROI_Y = 145, 70
+ROI_W, ROI_H = 505, 450 
 
 def preprocess_img(img_bgr, target_size):
     W, H = target_size
@@ -125,7 +123,6 @@ video_cache = VideoReaderCache()
 
 
 def load_preprocessed(i, vpaths, fidxs, target_size):
-    # Make path Windows-safe if needed
     vpath = str(vpaths[i]).replace("/", "\\")
     frame = video_cache.read_frame(vpath, int(fidxs[i]))
     if frame is None:
@@ -142,8 +139,6 @@ def process_one_day(day_str: str):
         print(f"[{day_str}] CSV not found: {csv_path}")
         return
 
-    # Output structure:
-    # results/YYYYMMDD/ frames_detected_by_lstm, 
     out_dir = RESULTS_DIR / day_str
 
     out_frames_dir = out_dir / "frames_detected_by_lstm"
@@ -202,7 +197,6 @@ def process_one_day(day_str: str):
 
     t0 = time.time()
 
-    # Sliding windows
     for s in range(0, N - L + 1, STRIDE):
         window_idx = range(s, s + L)
         frames = [load_preprocessed(t, vpaths, fidxs, target_size) for t in window_idx]
@@ -215,7 +209,6 @@ def process_one_day(day_str: str):
         if (s // STRIDE) % 20 == 0:
             print(f"   > Progress: {s}/{N} frames | {time.time() - t0:.1f}s")
 
-    # Final window
     if (N - L) >= 0 and counts[N - 1] == 0:
         s_final = N - L
         frames = [load_preprocessed(t, vpaths, fidxs, target_size) for t in range(s_final, N)]
@@ -238,7 +231,7 @@ def process_one_day(day_str: str):
     df["class_label"] = [CLASS_NAMES[idx] for idx in pred_idx]
     df.to_csv(out_csv_per_frame, index=False)
 
-    # Explosion intervals + save frames class 0
+    # Explosion intervals
     zero_pos = np.where(pred_idx == POSITIVE_CLASS)[0]
     zero_runs = []
     if len(zero_pos) > 0:

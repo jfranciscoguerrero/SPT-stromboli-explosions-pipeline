@@ -84,9 +84,9 @@ Step 3: Run the pipeline inside the container
     
     python src/run_pipeline.py
 
-4. The full dataset is hosted on Zenodo due to its size.
+4. The full dataset is hosted on Zenodo.
 
-    Zenodo link (DOI): https://zenodo.org/franciscoguerrero/1452.doi.11111
+    Zenodo link (DOI): https://doi.org/10.5281/zenodo.18657032
 
     You can use this dataset to:
 
